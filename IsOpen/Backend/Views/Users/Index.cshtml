@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Domain.User>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Inicio";
 }
 
-<h2>Index</h2>
+<h2>Dueños</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",new { }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -38,9 +38,9 @@
 }
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+            @Html.ActionLink("Editar", "Edit", new { id=item.UserId }, new { @class = "btn btn-success" }) 
+            @Html.ActionLink("Detalles", "Details", new { id=item.UserId }, new { @class = "btn btn-warning" }) 
+            @Html.ActionLink("Borrar", "Delete", new { id=item.UserId }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

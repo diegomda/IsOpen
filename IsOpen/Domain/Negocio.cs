@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace Domain
 {
@@ -29,6 +30,14 @@ namespace Domain
         [Display(Name = "Dueño")]
         public int UserId { get; set; }
 
+        [Display(Name = "Esta Abierto?")]
+        public bool IsActive { get; set; }
+
+        [Display(Name = "Orden")]
+        public int Order { get; set; }
+
         public virtual User User { get; set; }
+
+
     }
 }

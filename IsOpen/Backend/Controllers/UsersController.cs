@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
+﻿using Backend.helper;
 using Backend.Models;
 using Domain;
-using Backend.helper;
+using System.Data.Entity;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Backend.Controllers
 {
@@ -17,6 +12,39 @@ namespace Backend.Controllers
     {
         private DataContextLocal db = new DataContextLocal();
 
+        public async Task<ActionResult> CreateNegocio(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var negocio = await db.Negocios.FindAsync(id);
+            if (negocio == null)
+            {
+                return HttpNotFound();
+            }
+
+            var view = new Negocio { NegocioId = negocio.NegocioId, };
+            return View(view);
+        }
+
+        // POST: Negocios/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateNegocio(Negocio view)
+        {
+
+            if (ModelState.IsValid)
+            {
+                db.Negocios.Add(view);
+                await db.SaveChangesAsync();
+                return RedirectToAction(string.Format("Details/{0}",view.UserId));
+            }
+
+            return View(view);
+        }
         // GET: Users
         public async Task<ActionResult> Index()
         {

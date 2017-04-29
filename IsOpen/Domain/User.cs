@@ -12,11 +12,13 @@ namespace Domain
         public int UserId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [Display(Name = "Name")]
+        [Display(Name = "Nombre")]
         public string Name { get; set; }
 
+        [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
+        [Display(Name = "Foto")]
         public string Logo { get; set; }
 
         public virtual ICollection<Negocio> Negocio { get; set; }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System;
 
+
 namespace Backend.Controllers
 {
     public class NegociosController : Controller
@@ -52,18 +53,7 @@ namespace Backend.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var pic = string.Empty;
-                    var folder = "~/Content/Fotos";
-
-                    if (view.LogoFile != null)
-                    {
-                        pic = FileHelper.UploadPhoto(view.LogoFile, folder);
-                        pic = string.Format("{0}/{1}", folder, pic);
-                    }
-
-                    var negocio = ToNegocio(view);
-                    negocio.Logo = pic;
-                    db.Negocios.Add(negocio);
+                    db.Negocios.Add(view);
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
@@ -85,6 +75,8 @@ namespace Backend.Controllers
                 Telefono = view.Telefono,
                 Descripcion = view.Descripcion,
                 UserId = view.UserId,
+                Order = view.Order,
+                IsActive = view.IsActive,
             };
         }
 
@@ -117,6 +109,8 @@ namespace Backend.Controllers
                 Telefono = negocio.Telefono,
                 Descripcion = negocio.Descripcion,
                 UserId = negocio.UserId,
+                Order = negocio.Order,
+                IsActive = negocio.IsActive,
             };
 
         }

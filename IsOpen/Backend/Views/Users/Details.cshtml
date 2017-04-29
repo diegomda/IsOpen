@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <div>
-    <h4>User</h4>
+    <h4>Dueños</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -31,12 +31,89 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Logo)
+
+            @if (!string.IsNullOrEmpty(Model.Logo))
+            {
+                <img src="@Url.Content(Model.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+            }
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar Dueño", "Edit", new { id = Model.UserId }, new { @class = "btn btn-success" }) 
+    @Html.ActionLink("Volver a la lista", "Index",new { }, new { @class = "btn btn-primary" })
 </p>
+<h4>Negocios</h4>
+@if(Model.Negocio.Count == 0)
+{
+    <h5>Este usuario no posee negocios registrados</h5>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Negocio.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Negocio.FirstOrDefault().Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Negocio.FirstOrDefault().Logo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Negocio.FirstOrDefault().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Negocio.FirstOrDefault().Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Negocio.FirstOrDefault().Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Negocio.FirstOrDefault().IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Negocio.FirstOrDefault().Order)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Negocio.OrderBy(n => n.Name))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Logo))
+                    {
+                        <img src="@Url.Content(item.Logo)" alt="Image" style="width:80px;height:80px;max-width: 100%; height: auto;" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+}
