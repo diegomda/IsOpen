@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Web;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
@@ -15,16 +14,21 @@ namespace Domain
         public string Name { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
         public string Logo { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Display(Name = "E-mail")]
+        [DataType(DataType.EmailAddress)]
         public string  Email { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [DataType(DataType.PhoneNumber)]
         public string Telefono { get; set; }
 
+        [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
         [Display(Name = "Dueño")]
@@ -36,6 +40,7 @@ namespace Domain
         [Display(Name = "Orden")]
         public int Order { get; set; }
 
+        [JsonIgnore]
         public virtual User User { get; set; }
 
 

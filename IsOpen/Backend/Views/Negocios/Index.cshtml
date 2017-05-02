@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<Domain.Negocio>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Inicio";
 }
 
 <h2>Negocios</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create",new { }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -34,10 +34,11 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
-        </th><th>
-    @Html.DisplayNameFor(model => model.Order)
-        </th>    
-            <th></th>
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Order)*@
+        </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -54,8 +55,9 @@
         <td>
 @if (!string.IsNullOrEmpty(item.Logo))
 {
-    <img src="@Url.Content(item.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
-}        </td>
+    <img src="@Url.Content(item.Logo)" alt="Image" style="width:50px;height:50px;max-width: 100%; height: auto;" />
+}
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
@@ -69,11 +71,12 @@
             @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
-             @Html.DisplayFor(modelItem => item.Order)
-</td>        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.NegocioId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.NegocioId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.NegocioId })
+            @*@Html.DisplayFor(modelItem => item.Order)*@
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.NegocioId },new {@class ="btn btn-success" })
+            @Html.ActionLink("Detalles", "Details", new { id=item.NegocioId }, new { @class = "btn btn-warning" }) 
+            @Html.ActionLink("Borrar", "Delete", new { id=item.NegocioId }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

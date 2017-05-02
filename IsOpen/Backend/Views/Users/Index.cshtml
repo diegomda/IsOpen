@@ -7,7 +7,7 @@
 <h2>Dueños</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create",new { }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Añadir", "Create", new { }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -18,31 +18,38 @@
             @Html.DisplayNameFor(model => model.Direccion)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Logo)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Direccion)
-        </td>
-        <td>
-@if (!string.IsNullOrEmpty(item.Logo))
-{
-    <img src="@Url.Content(item.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
-}
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.UserId }, new { @class = "btn btn-success" }) 
-            @Html.ActionLink("Detalles", "Details", new { id=item.UserId }, new { @class = "btn btn-warning" }) 
-            @Html.ActionLink("Borrar", "Delete", new { id=item.UserId }, new { @class = "btn btn-danger" })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.Logo))
+                {
+                    <img src="@Url.Content(item.Logo)" alt="Image" style="width:100px;height:100px;max-width: 100%; height: auto;" />
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.UserId }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Detalles", "Details", new { id = item.UserId }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Borrar", "Delete", new { id = item.UserId }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
 
 </table>

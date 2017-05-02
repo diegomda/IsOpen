@@ -1,4 +1,5 @@
-﻿using Backend.helper;
+﻿using Backend.Classes;
+using Backend.helper;
 using Backend.Models;
 using Domain;
 using System.Data.Entity;
@@ -8,43 +9,13 @@ using System.Web.Mvc;
 
 namespace Backend.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class UsersController : Controller
     {
         private DataContextLocal db = new DataContextLocal();
 
-        public async Task<ActionResult> CreateNegocio(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var negocio = await db.Negocios.FindAsync(id);
-            if (negocio == null)
-            {
-                return HttpNotFound();
-            }
 
-            var view = new Negocio { NegocioId = negocio.NegocioId, };
-            return View(view);
-        }
-
-        // POST: Negocios/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateNegocio(Negocio view)
-        {
-
-            if (ModelState.IsValid)
-            {
-                db.Negocios.Add(view);
-                await db.SaveChangesAsync();
-                return RedirectToAction(string.Format("Details/{0}",view.UserId));
-            }
-
-            return View(view);
-        }
         // GET: Users
         public async Task<ActionResult> Index()
         {
@@ -72,9 +43,7 @@ namespace Backend.Controllers
             return View();
         }
 
-        // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(UserView view)
@@ -92,9 +61,9 @@ namespace Backend.Controllers
 
                 var user = ToUser(view);
                 user.Logo = pic;
-
                 db.Users.Add(user);
                 await db.SaveChangesAsync();
+                UsersHelper.CreateUserASP(view.Email, "User", view.Password);
                 return RedirectToAction("Index");
             }
 
@@ -108,6 +77,7 @@ namespace Backend.Controllers
                 UserId = view.UserId,
                 Name = view.Name,
                 Direccion = view.Direccion,
+                Email = view.Email,
                 Logo = view.Logo,
             };
 
@@ -134,10 +104,13 @@ namespace Backend.Controllers
         {
             return new UserView
             {
+
                 UserId = user.UserId,
                 Name = user.Name,
                 Direccion = user.Direccion,
+                Email = user.Email,
                 Logo = user.Logo,
+
             };
         }
 
@@ -160,7 +133,8 @@ namespace Backend.Controllers
                 }
 
                 var user = ToUser(view);
-                user.Logo = pic; db.Entry(user).State = EntityState.Modified;
+                user.Logo = pic;
+                db.Entry(user).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

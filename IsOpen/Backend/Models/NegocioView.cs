@@ -6,6 +6,7 @@ using System.Web;
 namespace Backend.Models
 {
     [NotMapped]
+
     public class NegocioView : Negocio
     {
         [Display(Name = "Logo")]
