@@ -46,7 +46,7 @@ namespace Backend.Controllers
             if (ModelState.IsValid)
             {
                 var pic = string.Empty;
-                var folder = "~/Content/Fotos";
+                var folder = "~/Content/FotosNegocios";
 
                 if (view.LogoFile != null)
                 {

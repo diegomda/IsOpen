@@ -15,7 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace API.Controllers
 {
-    [Authorize(Roles="User")]
+    [Authorize(Roles = "User")]
     [RoutePrefix("api/Users")]
     public class UsersController : ApiController
     {
@@ -26,13 +26,14 @@ namespace API.Controllers
         {
             var email = string.Empty;
             dynamic jsonObject = form;
-
+            
             try
             {
                 email = jsonObject.Email.Value;
             }
             catch
             {
+
                 return BadRequest("Incorrect call");
             }
 
@@ -49,6 +50,7 @@ namespace API.Controllers
         // GET: api/Users
         public IQueryable<User> GetUsers()
         {
+            db.Configuration.ProxyCreationEnabled = false;
             return db.Users;
         }
 
@@ -56,7 +58,7 @@ namespace API.Controllers
         [ResponseType(typeof(User))]
         public async Task<IHttpActionResult> GetUser(int id)
         {
-            User user = await db.Users.FindAsync(id);
+            var user = await db.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
